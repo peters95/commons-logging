@@ -212,6 +212,7 @@ under the License.
               <goal>jar</goal>
             </goals>
             <configuration>
+              <classifier>api</classifier>
               <jarName>${project.artifactId}-api-${project.version}</jarName>
               <includes>
                 <include>org/apache/commons/logging/*.class</include>
@@ -236,6 +237,7 @@ under the License.
               <goal>jar</goal>
             </goals>
             <configuration>
+              <classifier>adapters</classifier>
               <jarName>${project.artifactId}-adapters-${project.version}</jarName>
               <includes>
                 <include>org/apache/commons/logging/impl/**.class</include>
@@ -248,7 +250,7 @@ under the License.
               </excludes>
             </configuration>
           </execution>
-          
+
           <!--
             - Define the full jar last, the deploy/install plugin seems to be broken
             - and takes the last definition from here.
@@ -260,6 +262,7 @@ under the License.
               <goal>jar</goal>
             </goals>
             <configuration>
+              <classifier>full</classifier>
               <jarName>${project.artifactId}-${project.version}</jarName>
             </configuration>
           </execution>
@@ -313,12 +316,12 @@ under the License.
             <configuration>
               <artifacts>
                 <artifact>
-                  <file>${project.build.directory}/${project.artifactId}-adapters-${project.version}.jar</file>
+                  <file>${project.build.directory}/${project.artifactId}-${project.version}-adapters.jar</file>
                   <type>jar</type>
                   <classifier>adapters</classifier>
                 </artifact>
                 <artifact>
-                  <file>${project.build.directory}/${project.artifactId}-api-${project.version}.jar</file>
+                  <file>${project.build.directory}/${project.artifactId}-${project.version}-api.jar</file>
                   <type>jar</type>
                   <classifier>api</classifier>
                 </artifact>
@@ -393,8 +396,8 @@ under the License.
                   <logkit>${logkit:logkit:jar}</logkit>
                   <servlet-api>${javax.servlet:servlet-api:jar}</servlet-api>
                   <commons-logging>target/${project.build.finalName}.jar</commons-logging>
-                  <commons-logging-api>target/${project.artifactId}-api-${project.version}.jar</commons-logging-api>
-                  <commons-logging-adapters>target/${project.artifactId}-adapters-${project.version}.jar</commons-logging-adapters>
+                  <commons-logging-api>target/${project.artifactId}-${project.version}-api.jar</commons-logging-api>
+                  <commons-logging-adapters>target/${project.artifactId}-${project.version}-adapters.jar</commons-logging-adapters>
                   <testclasses>target/commons-logging-tests.jar</testclasses>
               </systemPropertyVariables>
             </configuration>
@@ -405,7 +408,6 @@ under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5</version>
         <configuration>
           <descriptors>
             <descriptor>src/main/assembly/bin.xml</descriptor>
